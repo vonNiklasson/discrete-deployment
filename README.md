@@ -1,1 +1,1 @@
-# discrete-integration
+# Discrete Integration

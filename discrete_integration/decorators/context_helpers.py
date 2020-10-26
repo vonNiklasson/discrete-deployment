@@ -1,7 +1,13 @@
 import os
 
+from discrete_integration import settings
+
 
 class DirectoryHelper:
+
+    @staticmethod
+    def get_working_dir():
+        return os.getcwd()
 
     @staticmethod
     def traverse_up(path):
@@ -12,8 +18,10 @@ class DirectoryHelper:
         return os.path.isfile(file)
 
     @staticmethod
-    def init_file_exists(path):
-        DirectoryHelper.file_exists(path + '.di_init.json')
+    def root_file_exists(path: str):
+        if not path.endswith('/'):
+            path = path + '/'
+        return DirectoryHelper.file_exists(path + settings.INIT_FILE_NAME)
 
     @staticmethod
     def is_system_root(path):

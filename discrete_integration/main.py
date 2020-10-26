@@ -1,40 +1,13 @@
 import click
 import os
 
-class DirectoryHelper:
-
-    @staticmethod
-    def traverse_up(path):
-        return os.path.dirname(path)
-
-    @staticmethod
-    def file_exists(file):
-        return os.path.isfile(file)
-
-    @staticmethod
-    def init_file_exists(path):
-        DirectoryHelper.file_exists(path + '.di_init.json')
-
-    @staticmethod
-    def is_system_root(path):
-        return path == DirectoryHelper.traverse_up(path)
-
-
-class ProjectRoot:
-
-    def __init__(self, path: str, exists: bool, is_assumed: bool):
-        self.path = path
-        self.exists = exists
-        self.is_assumed = is_assumed
-
-    def __str__(self):
-        return self.path
+from discrete_integration.context_helpers import DirectoryHelper, ProjectRoot
 
 
 class Config:
 
     def __init__(self):
-        self.project_root: ProjectRoot = ProjectRoot(None, False, False)
+        self.project_root: ProjectRoot = ProjectRoot('', False, False)
         self.working_dir: str = os.getcwd()
 
     def assume_project_root(self, current_path: str = None):

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='discrete-integration',
-    version='0.1.0',
+    version='0.1.1',
     author="Johan Niklasson",
     author_email="johan@niklasson.me",
     description="",

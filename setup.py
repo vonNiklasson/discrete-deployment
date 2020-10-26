@@ -20,6 +20,13 @@ setup(
         [console_scripts]
         di=discrete_integration.main:cli
     ''',
-    classifiers=[],
+    classifiers=[
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "Intended Audience :: Developers",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Operating System :: OS Independent",
+        "Topic :: Utilities",
+    ],
     python_requires='>=3.5',
 )

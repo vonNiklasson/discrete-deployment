@@ -5,10 +5,10 @@
 [![Supports Wheel format][wheel_img]][wheel_target]
 
 [license_target]: https://raw.githubusercontent.com/vonNiklasson/discrete-integration/develop/LICENSE
-[license_img]: https://img.shields.io/pypi/l/discrete-integration.svg
+[license_img]: https://img.shields.io/pypi/l/discrete-integration
 
 [pypi_target]: https://pypi.python.org/pypi/discrete-integration/
-[pypi_version_img]: https://img.shields.io/pypi/v/discrete-integration.svg
+[pypi_version_img]: https://img.shields.io/pypi/v/discrete-integration
 
 [wheel_target]: https://pypi.python.org/pypi/discrete-integration/
-[wheel_img]: https://img.shields.io/pypi/wheel/discrete-integration.svg
+[wheel_img]: https://img.shields.io/pypi/wheel/discrete-integration

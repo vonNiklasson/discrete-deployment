@@ -18,7 +18,7 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        di=discrete-integration/main.py:di
+        di=discrete_integration.main:cli
     ''',
     classifiers=[],
     python_requires='>=3.5',

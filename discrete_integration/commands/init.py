@@ -8,20 +8,6 @@ from discrete_integration.utils.directory_helper import DirectoryHelper
 class Init:
 
     @staticmethod
-    @click.command()
-    @click.argument('init_path', required=False, default='.',
-                    type=click.Path(exists=True, writable=True, file_okay=False, resolve_path=True))
-    @di_config
-    def command(config: Config, init_path: str):
-        # Check if a project root already exists
-        if not Init.assert_current_path_compatibility(config, init_path):
-            return
-        if not Init.assert_parent_path_compatibility(config, init_path):
-            return
-
-        click.secho('Initialising Discrete Integration', fg='cyan')
-
-    @staticmethod
     def assert_current_path_compatibility(config: Config, init_path: str):
         # Check if a project root already exists in the current directory
         if config.project_root.exists and config.project_root.path == init_path:
@@ -52,3 +38,30 @@ class Init:
                 return False
         return True
 
+    @staticmethod
+    def create_init_structure(config: Config, init_path: str):
+        # Creating .di directory
+        DirectoryHelper.create_di_config_dir(init_path)
+        click.secho('Creating project config directory .di/', fg='yellow')
+        # Creating initial di.json file in project root
+        if not DirectoryHelper.file_exists(DirectoryHelper.get_di_file_path(init_path)):
+            open(DirectoryHelper.get_di_file_path(init_path), "x")
+            click.secho('Creating initial Discrete Integration file di.json in project root', fg='yellow')
+        else:
+            click.secho('Skipping initial Discrete Integration file di.json (already exists)', fg='yellow')
+
+
+    @staticmethod
+    @click.command()
+    @click.argument('init_path', required=False, default='.',
+                    type=click.Path(exists=True, writable=True, file_okay=False, resolve_path=True))
+    @di_config
+    def command(config: Config, init_path: str):
+        # Check if a project root already exists
+        if not Init.assert_current_path_compatibility(config, init_path):
+            return
+        if not Init.assert_parent_path_compatibility(config, init_path):
+            return
+
+        click.secho('Initialising Discrete Integration', fg='cyan')
+        Init.create_init_structure(config, init_path)

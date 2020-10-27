@@ -24,7 +24,7 @@ class DirectoryHelper:
     @staticmethod
     def is_project_root(path: str):
         return DirectoryHelper.dir_exists(
-            os.path.join(path, settings.DI_ROOT_DIR_NAME)
+            os.path.join(path, settings.DI_ROOT_CONFIG_DIR_NAME)
         )
 
     @staticmethod
@@ -32,5 +32,5 @@ class DirectoryHelper:
         return path == DirectoryHelper.traverse_up(path)
 
     @staticmethod
-    def get_di_root(path: str):
-        return os.path.join(path, settings.DI_ROOT_DIR_NAME)
+    def get_di_config_path(path: str):
+        return os.path.join(path, settings.DI_ROOT_CONFIG_DIR_NAME)

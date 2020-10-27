@@ -1,2 +1,2 @@
 
-DI_ROOT_DIR_NAME = '.di'
+DI_ROOT_CONFIG_DIR_NAME = '.di'

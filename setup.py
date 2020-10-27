@@ -14,7 +14,8 @@ setup(
     url="https://github.com/vonNiklasson/discrete-integration",
     py_modules=['discrete-integration'],
     install_requires=[
-        'Click',
+        'click==7.1.2',
+        'python-dotenv==0.14.0',
     ],
     entry_points='''
         [console_scripts]

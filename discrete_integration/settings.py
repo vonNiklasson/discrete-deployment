@@ -1,3 +1,2 @@
 
-
-INIT_FILE_NAME = '.di_root.json'
+DI_ROOT_DIR_NAME = '.di'

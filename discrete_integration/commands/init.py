@@ -1,6 +1,5 @@
 import click
 
-from discrete_integration import settings
 from discrete_integration.decorators.config import Config, di_config
 from discrete_integration.utils.directory_helper import DirectoryHelper
 
@@ -39,17 +38,19 @@ class Init:
         return True
 
     @staticmethod
-    def create_init_structure(config: Config, init_path: str):
+    def create_di_config_dir(config: Config, init_path: str):
         # Creating .di directory
         DirectoryHelper.create_di_config_dir(init_path)
         click.secho('Creating project config directory .di/', fg='yellow')
+
+    @staticmethod
+    def create_initial_di_file(config: Config, init_path: str):
         # Creating initial di.json file in project root
         if not DirectoryHelper.file_exists(DirectoryHelper.get_di_file_path(init_path)):
             open(DirectoryHelper.get_di_file_path(init_path), "x")
             click.secho('Creating initial Discrete Integration file di.json in project root', fg='yellow')
         else:
             click.secho('Skipping initial Discrete Integration file di.json (already exists)', fg='yellow')
-
 
     @staticmethod
     @click.command()
@@ -64,4 +65,5 @@ class Init:
             return
 
         click.secho('Initialising Discrete Integration', fg='cyan')
-        Init.create_init_structure(config, init_path)
+        Init.create_di_config_dir(config, init_path)
+        Init.create_initial_di_file(config, init_path)

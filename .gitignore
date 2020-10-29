@@ -130,3 +130,5 @@ dmypy.json
 
 # IntelliJ config
 .idea/
+
+di.yaml

@@ -1,15 +1,25 @@
 import click
 
-from discrete_integration.utils.directory_helper import DirectoryHelper
+from discrete_integration.commands.init import Init
+from discrete_integration.decorators import pass_context, pass_config, Context, Config
+from discrete_integration.utils.file_helper import FileHelper
 
 
 @click.group()
-@click.pass_context
-def cli(context):
-    context.working_dir = DirectoryHelper.get_working_dir()
+# Contexts
+@pass_config
+@pass_context
+# Options
+@click.option("-wp", "--working-path", required=False, default='.',
+              type=click.Path(exists=True, file_okay=False, writable=True, resolve_path=True)
+              )
+def cli(context: Context, config: Config, working_path: str):
+    context.working_path = working_path
+    context.project_path, context.project_exists = FileHelper.find_project_root(working_path)
+    # IF there's a project root, load the targets into the config
+    if context.project_exists:
+        config.is_initialised = True
+        config.load_targets(context.project_path)
 
 
-@cli.command()
-@click.pass_context
-def init(context):
-    pass
+cli.add_command(Init.command, 'init')

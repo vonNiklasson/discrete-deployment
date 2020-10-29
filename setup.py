@@ -15,7 +15,9 @@ setup(
     py_modules=['discrete-integration'],
     install_requires=[
         'click==7.1.2',
-        'python-dotenv==0.14.0',
+        'python-dotenv==0.15.0',
+        'PyYAML==5.3.1',
+        'python-slugify==4.0.1',
     ],
     entry_points='''
         [console_scripts]

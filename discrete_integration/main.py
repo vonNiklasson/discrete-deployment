@@ -1,6 +1,6 @@
 import click
 
-from discrete_integration.commands.init import Init
+from discrete_integration.commands import Init, Scan
 from discrete_integration.decorators import pass_context, pass_config, Context, Config
 from discrete_integration.utils.file_helper import FileHelper
 
@@ -23,3 +23,4 @@ def cli(context: Context, config: Config, working_path: str):
 
 
 cli.add_command(Init.command, 'init')
+cli.add_command(Scan.command, 'scan')

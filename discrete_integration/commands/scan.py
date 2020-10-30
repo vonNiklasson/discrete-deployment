@@ -3,7 +3,7 @@ import click
 from discrete_integration.decorators import pass_context, pass_config, Context, Config
 
 
-class Init:
+class Scan:
 
     @staticmethod
     @click.command()

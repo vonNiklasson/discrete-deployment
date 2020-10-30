@@ -132,3 +132,4 @@ dmypy.json
 .idea/
 
 di.yaml
+.di_targets.yaml

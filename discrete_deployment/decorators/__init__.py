@@ -1,5 +1,5 @@
-from discrete_integration.decorators.config import Config
-from discrete_integration.decorators.context import Context
+from discrete_deployment.decorators.config import Config
+from discrete_deployment.decorators.context import Context
 import click
 
 pass_context = click.make_pass_decorator(Context, ensure=True)

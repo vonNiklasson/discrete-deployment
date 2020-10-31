@@ -1,6 +1,6 @@
 import click
 
-from discrete_integration.decorators import pass_context, pass_config, Context, Config
+from discrete_deployment.decorators import pass_context, pass_config, Context, Config
 
 
 class Init:

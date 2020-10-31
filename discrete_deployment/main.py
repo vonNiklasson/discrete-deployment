@@ -1,8 +1,8 @@
 import click
 
-from discrete_integration.commands import Init, Scan
-from discrete_integration.decorators import pass_context, pass_config, Context, Config
-from discrete_integration.utils.file_helper import FileHelper
+from discrete_deployment.commands import Init, Scan
+from discrete_deployment.decorators import pass_context, pass_config, Context, Config
+from discrete_deployment.utils.file_helper import FileHelper
 
 
 @click.group()
@@ -19,7 +19,7 @@ def cli(context: Context, config: Config, working_path: str):
     # IF there's a project root, load the targets into the config
     if context.project_exists:
         config.is_initialised = True
-        config.load_targets(context.project_path)
+        config.load_paths(context.project_path)
 
 
 cli.add_command(Init.command, 'init')

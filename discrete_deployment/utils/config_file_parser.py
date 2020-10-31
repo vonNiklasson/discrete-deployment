@@ -7,7 +7,7 @@ from discrete_deployment.utils.file_helper import FileHelper
 class ConfigFileParser:
 
     @staticmethod
-    def load_configurations_lazy(path: str):
+    def lazy_load_config_file(path: str):
         """
         Loads a file containing the configurations into a Configuration class
 

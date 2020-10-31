@@ -18,11 +18,11 @@ class Scan:
     @pass_config
     @pass_context
     def command(context: Context, config: Config):
-        file_paths = Scan.find_ddep_configs_paths(context.project_path)
-        configurations = Scan.load_configurations_from_paths(file_paths)
+        file_paths = Scan.find_configs_paths(context.project_path)
+        configurations = Scan.lazy_load_configurations_from_paths(file_paths)
 
     @staticmethod
-    def find_ddep_configs_paths(path: str):
+    def find_configs_paths(path: str):
         file_paths = []
         file_names = glob.iglob(path + '/**/ddep.yaml', recursive=True)
         for file_name in file_names:
@@ -31,7 +31,7 @@ class Scan:
         return file_paths
 
     @staticmethod
-    def load_configurations_from_paths(paths: List[str]):
+    def lazy_load_configurations_from_paths(paths: List[str]):
         # Declare a set of names to keep track if we're loading duplicates
         config_names = set()
         # A dictionary of name: configuration
@@ -39,7 +39,7 @@ class Scan:
         # Iterate over all paths with configurations
         for path in paths:
             # Load the actual configuration into a temporarily dictionary
-            lazy_configs = ConfigFileParser.load_configurations_lazy(path)
+            lazy_configs = ConfigFileParser.lazy_load_config_file(path)
             # Iterate over each configuration
             for lazy_config in lazy_configs:
                 # Slugify the config name to something unified

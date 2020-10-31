@@ -21,7 +21,7 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        didep=discrete_deployment.main:cli
+        ddep=discrete_deployment.main:cli
     ''',
     classifiers=[
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",

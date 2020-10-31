@@ -131,5 +131,5 @@ dmypy.json
 # IntelliJ config
 .idea/
 
-dd.yaml
-.dd_targets.yaml
+ddep.yaml
+.ddep_targets.yaml

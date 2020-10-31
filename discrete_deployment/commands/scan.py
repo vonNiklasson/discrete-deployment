@@ -13,11 +13,12 @@ class Scan:
     @pass_config
     @pass_context
     def command(context: Context, config: Config):
-        Scan.find_dd_configs_paths(context.project_path)
+        Scan.find_ddep_configs_paths(context.project_path)
 
     @staticmethod
-    def find_dd_configs_paths(path: str):
+    def find_ddep_configs_paths(path: str):
         file_paths = []
-        file_names = glob.iglob(path + '/**/dd.yaml', recursive=True)
+        file_names = glob.iglob(path + '/**/ddep.yaml', recursive=True)
         for file_name in file_names:
             file_paths.append(file_name)
+

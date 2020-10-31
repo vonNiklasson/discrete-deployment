@@ -25,13 +25,13 @@ class FileHelper:
     @staticmethod
     def is_project_root(path: str):
         return FileHelper.file_exists(
-            os.path.join(path, settings.DD_PATHS_FILE_NAME)
+            os.path.join(path, settings.DDEP_PATHS_FILE_NAME)
         )
 
     @staticmethod
     def has_config_file(path: str):
         return FileHelper.file_exists(
-            os.path.join(path, settings.DD_CONFIG_FILE_NAME)
+            os.path.join(path, settings.DDEP_CONFIG_FILE_NAME)
         )
 
     @staticmethod
@@ -39,12 +39,12 @@ class FileHelper:
         return path == FileHelper.traverse_up(path)
 
     @staticmethod
-    def compose_dd_config_path(path: str):
-        return os.path.join(path, settings.DD_CONFIG_FILE_NAME)
+    def compose_ddep_config_path(path: str):
+        return os.path.join(path, settings.DDEP_CONFIG_FILE_NAME)
 
     @staticmethod
-    def compose_dd_paths_path(path: str):
-        return os.path.join(path, settings.DD_PATHS_FILE_NAME)
+    def compose_ddep_paths_path(path: str):
+        return os.path.join(path, settings.DDEP_PATHS_FILE_NAME)
 
     @staticmethod
     def read_yaml(path: str):
@@ -57,13 +57,13 @@ class FileHelper:
     @staticmethod
     def read_paths_file(path: str):
         return FileHelper.read_yaml(
-            FileHelper.compose_dd_paths_path(path)
+            FileHelper.compose_ddep_paths_path(path)
         )
 
     @staticmethod
     def read_config_file(path: str):
         return FileHelper.read_yaml(
-            FileHelper.compose_dd_config_path(path)
+            FileHelper.compose_ddep_config_path(path)
         )
 
     @staticmethod

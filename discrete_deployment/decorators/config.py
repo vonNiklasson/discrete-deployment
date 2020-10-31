@@ -27,14 +27,14 @@ class Config:
         file_paths = FileHelper.read_paths_file(project_path)
 
         # Read the list of targets
-        for file_target in file_paths['targets']:
-            # Store it in a dictionary based on the name for quick access
-            self.targets[slugify(file_target['name'])] = file_target['path']
+        for file_path in file_paths['paths']:
+            # Make sure the name is a list. If it's a string, convert it to a list
+            names = [file_path['name']] if isinstance(file_path['name'], str) else file_path['name']
+            for name in names:
+                # Store it in a dictionary based on the name for quick access
+                self.targets[slugify(name)] = file_path['path']
 
-        # Read the list of configs
-        for file_config in file_paths['configs']:
-            # Store it in a dictionary based on the name for quick access
-            self.configs[slugify(file_config['name'])] = file_config['path']
+        print(self.targets)
 
 
 class DdFile:
@@ -44,7 +44,7 @@ class DdFile:
 
     name: str
     path: str
-    dd_type: str
+    ddep_type: str
 
     @classmethod
     def from_path(cls, path):

@@ -4,22 +4,24 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name='discrete-integration',
-    version='0.1.1',
+    name='discrete-deployment',
+    version='0.1.2',
     author="Johan Niklasson",
     author_email="johan@niklasson.me",
     description="",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/vonNiklasson/discrete-integration",
-    py_modules=['discrete-integration'],
+    url="https://github.com/vonNiklasson/discrete-deployment",
+    py_modules=['discrete-deployment'],
     install_requires=[
         'click==7.1.2',
-        'python-dotenv==0.14.0',
+        'python-dotenv==0.15.0',
+        'PyYAML==5.3.1',
+        'python-slugify==4.0.1',
     ],
     entry_points='''
         [console_scripts]
-        di=discrete_integration.main:cli
+        ddep=discrete_deployment.main:cli
     ''',
     classifiers=[
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",

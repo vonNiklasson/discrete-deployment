@@ -39,11 +39,11 @@ class FileHelper:
         return path == FileHelper.traverse_up(path)
 
     @staticmethod
-    def compose_ddep_config_path(path: str):
+    def compose_config_path(path: str):
         return os.path.join(path, settings.DDEP_CONFIG_FILE_NAME)
 
     @staticmethod
-    def compose_ddep_paths_path(path: str):
+    def compose_paths_path(path: str):
         return os.path.join(path, settings.DDEP_PATHS_FILE_NAME)
 
     @staticmethod
@@ -57,13 +57,13 @@ class FileHelper:
     @staticmethod
     def read_paths_file(path: str):
         return FileHelper.read_yaml(
-            FileHelper.compose_ddep_paths_path(path)
+            FileHelper.compose_paths_path(path)
         )
 
     @staticmethod
     def read_config_file(path: str):
         return FileHelper.read_yaml(
-            FileHelper.compose_ddep_config_path(path)
+            FileHelper.compose_config_path(path)
         )
 
     @staticmethod

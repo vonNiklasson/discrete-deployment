@@ -28,7 +28,7 @@ class FileHelper:
     @staticmethod
     def is_project_root(path: str):
         return FileHelper.file_exists(
-            os.path.join(path, settings.DDEP_PATHS_FILE_NAME)
+            os.path.join(path, settings.DDEP_INDEX_FILE_NAME)
         )
 
     @staticmethod
@@ -46,8 +46,8 @@ class FileHelper:
         return os.path.join(path, settings.DDEP_CONFIG_FILE_NAME)
 
     @staticmethod
-    def compose_paths_path(path: str):
-        return os.path.join(path, settings.DDEP_PATHS_FILE_NAME)
+    def compose_index_path(path: str):
+        return os.path.join(path, settings.DDEP_INDEX_FILE_NAME)
 
     @staticmethod
     def read_yaml(path: str):
@@ -60,9 +60,9 @@ class FileHelper:
             yaml.dump(data, file, default_flow_style=False)
 
     @staticmethod
-    def read_paths_file(path: str):
+    def read_index_file(path: str):
         return FileHelper.read_yaml(
-            FileHelper.compose_paths_path(path)
+            FileHelper.compose_index_path(path)
         )
 
     @staticmethod
@@ -93,10 +93,14 @@ class FileHelper:
         return '', False
 
     @staticmethod
-    def find_configs_paths(path: str):
-        file_paths = []
-        file_names = glob.iglob(path + '/**/ddep.yaml', recursive=True)
-        for file_name in file_names:
-            file_paths.append(file_name)
+    def find_config_paths(path: str):
+        config_paths = glob.iglob(path + '/**/%s' % settings.DDEP_CONFIG_FILE_NAME, recursive=True)
+        return config_paths
 
-        return file_paths
+    @staticmethod
+    def make_path_relative(prefix_path: str, full_path: str):
+        if full_path.startswith(prefix_path):
+            relative_path = full_path[(len(prefix_path)):]
+            return relative_path.lstrip('/')
+        else:
+            return full_path

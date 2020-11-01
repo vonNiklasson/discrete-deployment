@@ -1,8 +1,11 @@
 import click
 
+from discrete_deployment import settings
+from discrete_deployment.configurations.config_classes import ConfigClasses
+from discrete_deployment.configurations.configurations import LazyConfiguration
 from discrete_deployment.decorators import pass_context, pass_config, Context, Config
 from discrete_deployment.utils.file_helper import FileHelper
-from discrete_deployment.utils.paths_file_parser import PathsFileParser
+from discrete_deployment.utils.index_file_parser import IndexFileParser
 
 
 class Init:
@@ -16,13 +19,7 @@ class Init:
     @click.argument("path", required=False, default='.',
                     type=click.Path(exists=True, file_okay=False, writable=True, resolve_path=True)
                     )
-    @click.option("--no-config-template", is_flag=True)
-    def command(context: Context, config: Config, path: str, no_config_template):
+    def command(context: Context, config: Config, path: str):
         context.project_path = path
-
-        if not no_config_template:
-            # TODO: Create a config template file
-            pass
-
-        paths_path = FileHelper.compose_paths_path(path)
-        PathsFileParser.save_paths(paths_path, {})
+        index_path = FileHelper.compose_index_path(path)
+        IndexFileParser.save_index_from_configurations(context, index_path, [])

@@ -11,7 +11,7 @@ from discrete_deployment.utils.file_helper import FileHelper
 class ConfigFileParser:
 
     @staticmethod
-    def lazy_load_config_file(path: str):
+    def lazy_load_config_from_path(path: str):
         """
         Loads a file containing the configurations into a Configuration class
 
@@ -47,7 +47,7 @@ class ConfigFileParser:
         # Iterate over all paths with configurations
         for path in paths:
             # Load the actual configuration into a temporarily dictionary
-            lazy_configs = ConfigFileParser.lazy_load_config_file(path)
+            lazy_configs = ConfigFileParser.lazy_load_config_from_path(path)
             # Iterate over each configuration
             for lazy_config in lazy_configs:
                 # Slugify the config name to something unified
@@ -61,3 +61,12 @@ class ConfigFileParser:
                 config_names.add(config_name)
 
         return configurations
+
+    @staticmethod
+    def group_configurations_by_path(configurations: Dict[str, LazyConfiguration]):
+        paths: Dict[str, List[str]] = {}
+        for name, configuration in configurations.items():
+            if configuration.path not in paths:
+                paths[configuration.path] = []
+            paths[configuration.path].append(name)
+        return paths

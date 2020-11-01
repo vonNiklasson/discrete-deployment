@@ -16,10 +16,10 @@ from discrete_deployment.utils.file_helper import FileHelper
 def cli(context: Context, config: Config, working_path: str):
     context.working_path = working_path
     context.project_path, context.project_exists = FileHelper.find_project_root(working_path)
-    # IF there's a project root, load the targets into the config
+    # If there's a project root, load the index file into the config
     if context.project_exists:
         config.is_initialised = True
-        config.load_paths(context.project_path)
+        config.load_index(context.project_path)
 
 
 cli.add_command(Init.command, 'init')

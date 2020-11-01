@@ -9,7 +9,7 @@ from discrete_deployment.decorators import pass_context, pass_config, Context, C
 from discrete_deployment.exceptions import ConfigurationAlreadyExistsException
 from discrete_deployment.utils.config_file_parser import ConfigFileParser
 from discrete_deployment.utils.file_helper import FileHelper
-from discrete_deployment.utils.paths_file_parser import PathsFileParser
+from discrete_deployment.utils.index_file_parser import IndexFileParser
 
 
 class Scan:
@@ -20,12 +20,22 @@ class Scan:
     @pass_config
     @pass_context
     def command(context: Context, config: Config):
+        # Make sure the project is initialised before trying to scan for files
+        if not context.project_exists:
+            click.echo("Project not initialised. Please run \"ddep init\" from your project root folder first.")
+            return
+
         # Find all ddep.yaml files
-        file_paths = FileHelper.find_configs_paths(context.project_path)
-        # Parse all ddep.yaml files into a Dict[str, LazyConfiguration] dictionary
-        configurations = ConfigFileParser.lazy_load_configurations_from_paths(file_paths)
-        # Save all targets into the paths file and overwrite it
-        PathsFileParser.save_paths(
-            FileHelper.compose_paths_path(context.project_path),
+        config_paths = FileHelper.find_config_paths(context.project_path)
+
+        configurations = []
+        # Read all the configuration into one list based on the paths
+        for config_path in config_paths:
+            configurations += ConfigFileParser.lazy_load_config_from_path(config_path)
+
+        # Save all names into the paths file and overwrite it
+        IndexFileParser.save_index_from_configurations(
+            context,
+            FileHelper.compose_index_path(context.project_path),
             configurations
         )

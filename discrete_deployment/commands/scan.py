@@ -8,6 +8,8 @@ from discrete_deployment.configurations.configurations import LazyConfiguration
 from discrete_deployment.decorators import pass_context, pass_config, Context, Config
 from discrete_deployment.exceptions import ConfigurationAlreadyExistsException
 from discrete_deployment.utils.config_file_parser import ConfigFileParser
+from discrete_deployment.utils.file_helper import FileHelper
+from discrete_deployment.utils.paths_file_parser import PathsFileParser
 
 
 class Scan:
@@ -18,37 +20,12 @@ class Scan:
     @pass_config
     @pass_context
     def command(context: Context, config: Config):
-        file_paths = Scan.find_configs_paths(context.project_path)
-        configurations = Scan.lazy_load_configurations_from_paths(file_paths)
-
-    @staticmethod
-    def find_configs_paths(path: str):
-        file_paths = []
-        file_names = glob.iglob(path + '/**/ddep.yaml', recursive=True)
-        for file_name in file_names:
-            file_paths.append(file_name)
-
-        return file_paths
-
-    @staticmethod
-    def lazy_load_configurations_from_paths(paths: List[str]):
-        # Declare a set of names to keep track if we're loading duplicates
-        config_names = set()
-        # A dictionary of name: configuration
-        configurations: Dict[str, LazyConfiguration] = {}
-        # Iterate over all paths with configurations
-        for path in paths:
-            # Load the actual configuration into a temporarily dictionary
-            lazy_configs = ConfigFileParser.lazy_load_config_file(path)
-            # Iterate over each configuration
-            for lazy_config in lazy_configs:
-                # Slugify the config name to something unified
-                config_name = slugify(lazy_config.name)
-                # Check if the configuration has already been loaded, if so throw an exception
-                if config_name in config_names:
-                    raise ConfigurationAlreadyExistsException(config_name)
-
-                configurations[config_name] = lazy_config
-                config_names.add(config_name)
-
-        return configurations
+        # Find all ddep.yaml files
+        file_paths = FileHelper.find_configs_paths(context.project_path)
+        # Parse all ddep.yaml files into a Dict[str, LazyConfiguration] dictionary
+        configurations = ConfigFileParser.lazy_load_configurations_from_paths(file_paths)
+        # Save all targets into the paths file and overwrite it
+        PathsFileParser.save_paths(
+            FileHelper.compose_paths_path(context.project_path),
+            configurations
+        )

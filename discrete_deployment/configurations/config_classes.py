@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class ConfigTypes(Enum):
+class ConfigClasses(Enum):
     DEPLOY = 'deploy'
     TEST = 'test'
     DO = 'do'

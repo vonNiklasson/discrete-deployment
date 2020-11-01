@@ -1,4 +1,7 @@
+import glob
 import os
+from typing import Dict
+
 import yaml
 
 from discrete_deployment import settings
@@ -49,10 +52,12 @@ class FileHelper:
     @staticmethod
     def read_yaml(path: str):
         with open(path, 'r') as stream:
-            try:
-                return yaml.safe_load(stream)
-            except yaml.YAMLError:
-                return None
+            return yaml.safe_load(stream)
+
+    @staticmethod
+    def write_yaml(path: str, data: Dict):
+        with open(path, 'w') as file:
+            yaml.dump(data, file, default_flow_style=False)
 
     @staticmethod
     def read_paths_file(path: str):
@@ -86,3 +91,12 @@ class FileHelper:
             current_path = FileHelper.traverse_up(current_path)
 
         return '', False
+
+    @staticmethod
+    def find_configs_paths(path: str):
+        file_paths = []
+        file_names = glob.iglob(path + '/**/ddep.yaml', recursive=True)
+        for file_name in file_names:
+            file_paths.append(file_name)
+
+        return file_paths

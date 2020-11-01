@@ -1,6 +1,9 @@
-from typing import Dict
+from typing import Dict, Union
 
+import yaml
 from slugify import slugify
+
+from discrete_deployment.configurations.configurations import LazyConfiguration, Configuration
 from discrete_deployment.utils.file_helper import FileHelper
 
 
@@ -13,10 +16,16 @@ class PathsFileParser:
 
         @param path: The path of the paths file.
         """
-        # Open the yaml file of paths
-        file_paths = FileHelper.read_yaml(path)
-
         targets: Dict[str, str] = {}
+        # Open the yaml file of paths
+        try:
+            file_paths = FileHelper.read_yaml(path)
+        except yaml.YAMLError as e:
+            # TODO: Catch this error somehow
+            return targets
+
+        if file_paths is None or file_paths['paths'] is None:
+            return targets
 
         # Read the list of targets
         for file_path in file_paths['paths']:
@@ -27,3 +36,11 @@ class PathsFileParser:
                 targets[slugify(name)] = file_path['path']
 
         return targets
+
+    @staticmethod
+    def save_paths(path: str, configurations: Dict[str, Union[Configuration]]):
+        paths_file = {
+            'paths': []
+        }
+
+        FileHelper.write_yaml(path, paths_file)

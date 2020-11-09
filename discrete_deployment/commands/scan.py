@@ -26,12 +26,14 @@ class Scan:
             return
 
         # Find all ddep.yaml files
-        config_paths = FileHelper.find_config_paths(context.project_path)
+        config_paths_iglob = FileHelper.find_config_paths(context.project_path)
+        config_paths = [path for path in config_paths_iglob]
 
         configurations = []
         # Read all the configuration into one list based on the paths
         for config_path in config_paths:
-            configurations += ConfigFileParser.lazy_load_config_from_path(config_path)
+            click.echo("Found %s" % FileHelper.make_path_relative(context.project_path, config_path))
+            configurations += ConfigFileParser.lazy_load_file_from_path(context, config_path)
 
         # Save all names into the paths file and overwrite it
         IndexFileParser.save_index_from_configurations(

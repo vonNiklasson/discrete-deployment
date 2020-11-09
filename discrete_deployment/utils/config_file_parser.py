@@ -5,6 +5,7 @@ from slugify import slugify
 
 from discrete_deployment.configurations.config_classes import ConfigClasses
 from discrete_deployment.configurations.configurations import LazyConfiguration
+from discrete_deployment.decorators import Context
 from discrete_deployment.exceptions import ConfigurationAlreadyExistsException, MalformedConfigurationException
 from discrete_deployment.utils.file_helper import FileHelper
 
@@ -12,18 +13,19 @@ from discrete_deployment.utils.file_helper import FileHelper
 class ConfigFileParser:
 
     @staticmethod
-    def lazy_load_config_from_path(path: str):
+    def lazy_load_file_from_path(context: Context, path: str):
         """
         Loads a file containing the configurations into a Configuration class
 
+        @param context: The path of the configuration file.
         @param path: The path of the configuration file.
         """
         lazy_configurations: List[LazyConfiguration] = []
         try:
             file_configs = FileHelper.read_yaml(path)
-        except yaml.YAMLError as e:
-            # TODO: Catch this error somehow
-            return lazy_configurations
+        except yaml.YAMLError:
+            relative_path = FileHelper.make_path_relative(context.project_path, path)
+            raise MalformedConfigurationException(relative_path)
 
         if file_configs is None:
             return lazy_configurations
@@ -50,7 +52,7 @@ class ConfigFileParser:
         return lazy_configurations
 
     @staticmethod
-    def lazy_load_configurations_from_paths(paths: List[str]):
+    def lazy_load_files_from_paths(paths: List[str]):
         # Declare a set of names to keep track if we're loading duplicates
         config_names: Set[str] = set()
         # A dictionary of name: configuration
@@ -58,7 +60,7 @@ class ConfigFileParser:
         # Iterate over all paths with configurations
         for path in paths:
             # Load the actual configuration into a temporarily dictionary
-            lazy_configs = ConfigFileParser.lazy_load_config_from_path(path)
+            lazy_configs = ConfigFileParser.lazy_load_file_from_path(path)
             # Iterate over each configuration
             for lazy_config in lazy_configs:
                 # Slugify the config name to something unified

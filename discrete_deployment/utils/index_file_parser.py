@@ -48,7 +48,7 @@ class IndexFileParser:
         # Format the grouped names into an dictionary
         formatted_grouped_names = [
             {
-                'path': FileHelper.make_path_relative(context.project_path, file_path),
+                'path': context.get_project_relpath(file_path),
                 'names': file_names
             } for file_path, file_names in grouped_names.items()
         ]

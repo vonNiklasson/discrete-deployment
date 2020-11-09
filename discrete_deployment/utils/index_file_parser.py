@@ -1,9 +1,9 @@
-from typing import Dict, Union, List
+from typing import Dict, List, Union
 
 import yaml
 from slugify import slugify
 
-from discrete_deployment.configurations.configurations import LazyConfiguration, Configuration
+from discrete_deployment.configurations.configurations import Configuration, LazyConfiguration
 from discrete_deployment.utils.file_helper import FileHelper
 
 

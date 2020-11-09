@@ -1,7 +1,7 @@
 import click
 
 from discrete_deployment.commands import Init, Scan
-from discrete_deployment.decorators import pass_context, pass_config, Context, Config
+from discrete_deployment.decorators import Config, Context, pass_config, pass_context
 from discrete_deployment.utils.file_helper import FileHelper
 
 

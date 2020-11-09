@@ -1,9 +1,9 @@
 from typing import Dict
 
-from discrete_deployment.exceptions import NotInitialisedException
-from discrete_deployment.utils.file_helper import FileHelper
 from slugify import slugify
 
+from discrete_deployment.exceptions import NotInitialisedException
+from discrete_deployment.utils.file_helper import FileHelper
 from discrete_deployment.utils.index_file_parser import IndexFileParser
 
 

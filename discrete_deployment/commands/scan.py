@@ -1,6 +1,6 @@
 import click
 
-from discrete_deployment.decorators import pass_context, pass_config, Context, Config
+from discrete_deployment.decorators import Config, Context, pass_config, pass_context
 from discrete_deployment.utils.config_file_parser import ConfigFileParser
 from discrete_deployment.utils.file_helper import FileHelper
 from discrete_deployment.utils.index_file_parser import IndexFileParser

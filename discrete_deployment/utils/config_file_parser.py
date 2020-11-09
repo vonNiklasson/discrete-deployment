@@ -1,4 +1,4 @@
-from typing import List, Dict, Set
+from typing import Dict, List, Set
 
 import yaml
 from slugify import slugify

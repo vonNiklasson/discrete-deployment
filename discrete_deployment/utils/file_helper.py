@@ -60,18 +60,6 @@ class FileHelper:
             yaml.dump(data, file, default_flow_style=False)
 
     @staticmethod
-    def read_index_file(path: str):
-        return FileHelper.read_yaml(
-            FileHelper.compose_index_path(path)
-        )
-
-    @staticmethod
-    def read_config_file(path: str):
-        return FileHelper.read_yaml(
-            FileHelper.compose_config_path(path)
-        )
-
-    @staticmethod
     def find_project_root(current_path: str) -> (str, bool):
         """
         Finds the project root based on the current_path.
@@ -96,11 +84,3 @@ class FileHelper:
     def find_config_paths(path: str):
         config_paths = glob.iglob(path + '/**/%s' % settings.DDEP_CONFIG_FILE_NAME, recursive=True)
         return config_paths
-
-    @staticmethod
-    def make_path_relative(prefix_path: str, full_path: str):
-        if full_path.startswith(prefix_path):
-            relative_path = full_path[(len(prefix_path)):]
-            return relative_path.lstrip('/')
-        else:
-            return full_path

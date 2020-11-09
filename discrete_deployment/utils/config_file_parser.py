@@ -24,7 +24,7 @@ class ConfigFileParser:
         try:
             file_configs = FileHelper.read_yaml(path)
         except yaml.YAMLError:
-            relative_path = FileHelper.make_path_relative(context.project_path, path)
+            relative_path = context.get_project_relpath(path)
             raise MalformedConfigurationException(relative_path)
 
         if file_configs is None:

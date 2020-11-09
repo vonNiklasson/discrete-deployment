@@ -23,5 +23,8 @@ jobs:
     - name: Install dependencies
       run: make update
 
-    - name: Style check
-      run: make check
+    - name: Style check (imports)
+      run: make check-imports
+
+    - name: Style check (code)
+      run: make check-code

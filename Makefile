@@ -12,8 +12,14 @@ clean:
 	rm -rf .*cache
 
 .PHONY: check
-check:
+check: check-imports check-code
+
+.PHONY: check-imports
+check-imports:
 	isort --check-only $(SOURCE_FOLDER)
+
+.PHONY: check-code
+check-code:
 	black --check $(SOURCE_FOLDER)
 
 .PHONY: reformat

@@ -3,10 +3,10 @@ from typing import List
 
 
 class ConfigClasses(Enum):
-    DEPLOY = 'deploy'
-    TEST = 'test'
-    DO = 'do'
-    CONFIG = 'config'
+    DEPLOY = "deploy"
+    TEST = "test"
+    DO = "do"
+    CONFIG = "config"
 
     @staticmethod
     def from_str(label: str):

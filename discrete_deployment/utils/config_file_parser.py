@@ -11,7 +11,6 @@ from discrete_deployment.utils.file_helper import FileHelper
 
 
 class ConfigFileParser:
-
     @staticmethod
     def lazy_load_file_from_path(context: Context, path: str):
         """
@@ -36,8 +35,9 @@ class ConfigFileParser:
             if config_class_str not in ConfigClasses.values():
                 # If not, raise exception
                 raise MalformedConfigurationException(
-                    path, 'Config class "%s" not found. Must be one of %s.' %
-                          (config_class_str, ", ".join(ConfigClasses.values()))
+                    path,
+                    'Config class "%s" not found. Must be one of %s.'
+                    % (config_class_str, ", ".join(ConfigClasses.values())),
                 )
 
             # Convert the config class to it's corresponding ConfigClass value
@@ -45,9 +45,7 @@ class ConfigFileParser:
             # Iterate over all configurations in that specific type
             for configuration in configurations:
                 # Add them to the list
-                lazy_configurations.append(
-                    LazyConfiguration.from_dict(path, config_class, configuration)
-                )
+                lazy_configurations.append(LazyConfiguration.from_dict(path, config_class, configuration))
 
         return lazy_configurations
 

@@ -8,7 +8,6 @@ from discrete_deployment.utils.index_file_parser import IndexFileParser
 
 
 class Config:
-
     def __init__(self):
         self.is_initialised: bool = False
         self.names: Dict[str, str] = {}

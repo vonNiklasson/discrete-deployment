@@ -6,16 +6,18 @@ from discrete_deployment.utils.index_file_parser import IndexFileParser
 
 
 class Init:
-
     @staticmethod
     @click.command()
     # Contexts
     @pass_config
     @pass_context
     # Argument for where to initialise
-    @click.argument("path", required=False, default='.',
-                    type=click.Path(exists=True, file_okay=False, writable=True, resolve_path=True)
-                    )
+    @click.argument(
+        "path",
+        required=False,
+        default=".",
+        type=click.Path(exists=True, file_okay=False, writable=True, resolve_path=True),
+    )
     def command(context: Context, config: Config, path: str):
         context.project_path = path
         index_path = FileHelper.compose_index_path(path)

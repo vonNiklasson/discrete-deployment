@@ -8,7 +8,6 @@ from discrete_deployment import settings
 
 
 class FileHelper:
-
     @staticmethod
     def get_working_path():
         return os.getcwd()
@@ -27,15 +26,11 @@ class FileHelper:
 
     @staticmethod
     def is_project_root(path: str):
-        return FileHelper.file_exists(
-            os.path.join(path, settings.DDEP_INDEX_FILE_NAME)
-        )
+        return FileHelper.file_exists(os.path.join(path, settings.DDEP_INDEX_FILE_NAME))
 
     @staticmethod
     def has_config_file(path: str):
-        return FileHelper.file_exists(
-            os.path.join(path, settings.DDEP_CONFIG_FILE_NAME)
-        )
+        return FileHelper.file_exists(os.path.join(path, settings.DDEP_CONFIG_FILE_NAME))
 
     @staticmethod
     def is_system_root(path: str):
@@ -51,12 +46,12 @@ class FileHelper:
 
     @staticmethod
     def read_yaml(path: str):
-        with open(path, 'r') as stream:
+        with open(path, "r") as stream:
             return yaml.safe_load(stream)
 
     @staticmethod
     def write_yaml(path: str, data: Dict):
-        with open(path, 'w') as file:
+        with open(path, "w") as file:
             yaml.dump(data, file, default_flow_style=False)
 
     @staticmethod
@@ -78,9 +73,9 @@ class FileHelper:
                 break
             current_path = FileHelper.traverse_up(current_path)
 
-        return '', False
+        return "", False
 
     @staticmethod
     def find_config_paths(path: str):
-        config_paths = glob.iglob(path + '/**/%s' % settings.DDEP_CONFIG_FILE_NAME, recursive=True)
+        config_paths = glob.iglob(path + "/**/%s" % settings.DDEP_CONFIG_FILE_NAME, recursive=True)
         return config_paths

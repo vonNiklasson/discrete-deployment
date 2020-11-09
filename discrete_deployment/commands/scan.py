@@ -7,7 +7,6 @@ from discrete_deployment.utils.index_file_parser import IndexFileParser
 
 
 class Scan:
-
     @staticmethod
     @click.command()
     # Contexts
@@ -16,7 +15,7 @@ class Scan:
     def command(context: Context, config: Config):
         # Make sure the project is initialised before trying to scan for files
         if not context.project_exists:
-            click.echo("Project not initialised. Please run \"ddep init\" from your project root folder first.")
+            click.echo('Project not initialised. Please run "ddep init" from your project root folder first.')
             return
 
         # Find all ddep.yaml files
@@ -28,12 +27,10 @@ class Scan:
         for config_path in config_paths:
             # Print the file name based on the relative path
             click.echo(" - Found ", nl=False)
-            click.echo(click.style("%s" % context.get_working_relpath(config_path), fg='cyan'))
+            click.echo(click.style("%s" % context.get_working_relpath(config_path), fg="cyan"))
             configurations += ConfigFileParser.lazy_load_file_from_path(context, config_path)
 
         # Save all names into the paths file and overwrite it
         IndexFileParser.save_index_from_configurations(
-            context,
-            FileHelper.compose_index_path(context.project_path),
-            configurations
+            context, FileHelper.compose_index_path(context.project_path), configurations
         )

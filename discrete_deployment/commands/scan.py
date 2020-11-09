@@ -32,7 +32,9 @@ class Scan:
         configurations = []
         # Read all the configuration into one list based on the paths
         for config_path in config_paths:
-            click.echo("Found %s" % FileHelper.make_path_relative(context.project_path, config_path))
+            # Print the file name
+            click.echo(" - Found ", nl=False)
+            click.echo(click.style("%s" % FileHelper.make_path_relative(context.project_path, config_path), fg='cyan'))
             configurations += ConfigFileParser.lazy_load_file_from_path(context, config_path)
 
         # Save all names into the paths file and overwrite it

@@ -3,6 +3,7 @@ from typing import List, Dict
 
 import click
 from slugify import slugify
+from os.path import relpath
 
 from discrete_deployment.configurations.configurations import LazyConfiguration
 from discrete_deployment.decorators import pass_context, pass_config, Context, Config
@@ -32,9 +33,9 @@ class Scan:
         configurations = []
         # Read all the configuration into one list based on the paths
         for config_path in config_paths:
-            # Print the file name
+            # Print the file name based on the relative path
             click.echo(" - Found ", nl=False)
-            click.echo(click.style("%s" % FileHelper.make_path_relative(context.project_path, config_path), fg='cyan'))
+            click.echo(click.style("%s" % relpath(config_path, context.working_path), fg='cyan'))
             configurations += ConfigFileParser.lazy_load_file_from_path(context, config_path)
 
         # Save all names into the paths file and overwrite it

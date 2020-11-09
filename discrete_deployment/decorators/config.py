@@ -20,7 +20,7 @@ class Config:
         @raise NotInitialisedException: If Configuration is not initialised.
         @param project_path: The path of the project root.
         """
-        # If there's no project initialised, throw an exception
+        # If there's no project initialised, raise an exception
         if not self.is_initialised:
             raise NotInitialisedException()
 

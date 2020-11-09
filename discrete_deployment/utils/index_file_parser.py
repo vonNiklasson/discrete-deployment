@@ -61,6 +61,6 @@ class IndexFileParser:
         for config in configurations:
             if config.path not in paths:
                 paths[config.path] = []
-            paths[config.path].append(config.name)
+            paths[config.path].append(config.get_key())
 
         return paths

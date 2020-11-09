@@ -1,8 +1,5 @@
 import click
 
-from discrete_deployment import settings
-from discrete_deployment.configurations.config_classes import ConfigClasses
-from discrete_deployment.configurations.configurations import LazyConfiguration
 from discrete_deployment.decorators import pass_context, pass_config, Context, Config
 from discrete_deployment.utils.file_helper import FileHelper
 from discrete_deployment.utils.index_file_parser import IndexFileParser

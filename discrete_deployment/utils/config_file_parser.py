@@ -3,8 +3,9 @@ from typing import List, Dict, Set
 import yaml
 from slugify import slugify
 
+from discrete_deployment.configurations.config_classes import ConfigClasses
 from discrete_deployment.configurations.configurations import LazyConfiguration
-from discrete_deployment.exceptions import ConfigurationAlreadyExistsException
+from discrete_deployment.exceptions import ConfigurationAlreadyExistsException, MalformedConfigurationException
 from discrete_deployment.utils.file_helper import FileHelper
 
 
@@ -17,26 +18,36 @@ class ConfigFileParser:
 
         @param path: The path of the configuration file.
         """
-        parsed_configurations: List[LazyConfiguration] = []
+        lazy_configurations: List[LazyConfiguration] = []
         try:
             file_configs = FileHelper.read_yaml(path)
         except yaml.YAMLError as e:
             # TODO: Catch this error somehow
-            return parsed_configurations
+            return lazy_configurations
 
         if file_configs is None:
-            return parsed_configurations
+            return lazy_configurations
 
         # Iterate over each type of configuration in the file
-        for config_class, configurations in file_configs.items():
+        for config_class_str, configurations in file_configs.items():
+            # Make sure the config class is in the allowed values
+            if config_class_str not in ConfigClasses.values():
+                # If not, raise exception
+                raise MalformedConfigurationException(
+                    path, 'Config class "%s" not found. Must be one of %s.' %
+                          (config_class_str, ", ".join(ConfigClasses.values()))
+                )
+
+            # Convert the config class to it's corresponding ConfigClass value
+            config_class = ConfigClasses.from_str(config_class_str)
             # Iterate over all configurations in that specific type
             for configuration in configurations:
                 # Add them to the list
-                parsed_configurations.append(
+                lazy_configurations.append(
                     LazyConfiguration.from_dict(path, config_class, configuration)
                 )
 
-        return parsed_configurations
+        return lazy_configurations
 
     @staticmethod
     def lazy_load_configurations_from_paths(paths: List[str]):
@@ -52,7 +63,7 @@ class ConfigFileParser:
             for lazy_config in lazy_configs:
                 # Slugify the config name to something unified
                 config_name = slugify(lazy_config.name)
-                # Check if the configuration has already been loaded, if so throw an exception
+                # Check if the configuration has already been loaded, if so raise an exception
                 if config_name in config_names:
                     raise ConfigurationAlreadyExistsException(config_name)
 

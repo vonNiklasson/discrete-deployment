@@ -14,6 +14,9 @@ class Configuration:
     def __str__(self):
         return self.name
 
+    def get_key(self):
+        return "%s:%s" % (self.config_class.value, self.name)
+
 
 class LazyConfiguration(Configuration):
 

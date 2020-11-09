@@ -20,3 +20,11 @@ check:
 reformat:
 	isort --atomic $(SOURCE_FOLDER)
 	black $(SOURCE_FOLDER)
+
+.PHONY: update
+update:
+	pip install --upgrade -r requirements-dev.txt
+
+.PHONY: build
+build:
+	python setup.py --quiet sdist bdist_wheel

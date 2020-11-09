@@ -12,7 +12,6 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/vonNiklasson/discrete-deployment",
-    py_modules=['discrete-deployment'],
     install_requires=[
         'click==7.1.2',
         'python-dotenv==0.15.0',

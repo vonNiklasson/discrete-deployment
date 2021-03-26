@@ -15,7 +15,7 @@ setup(
     install_requires=[
         'click==7.1.2',
         'python-dotenv==0.15.0',
-        'PyYAML==5.3.1',
+        'PyYAML==5.4',
         'python-slugify==4.0.1',
     ],
     entry_points='''
